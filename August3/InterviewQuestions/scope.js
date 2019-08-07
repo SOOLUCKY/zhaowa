@@ -8,7 +8,7 @@ function showPerson() {
 
 showPerson();
 /**
- * 2
+ * 2， 函数作用域内局部变量覆盖了全局变量
  */
 
 //2.2
@@ -21,7 +21,7 @@ function showPerson() {
 
 showPerson();
 /**
- * undefined
+ * undefined，局部变量覆盖了全局变量，局部变量person不会提升，只有申明会提升，初始化不会
  */
 
 //2.3
@@ -39,9 +39,8 @@ function showPerson() {
 
 showPerson();
 /**
- * ƒ person() {
-
-    }
+ * ƒ person() {}
+ * 函数提升
  */
 
 //2.4
@@ -58,7 +57,7 @@ function showPerson() {
 
 showPerson();
 /**
- * ƒ person() {}
+ * ƒ person() {} 函数提升在变量提升之后
  */
 
 //2.5
