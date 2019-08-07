@@ -64,12 +64,18 @@ showPerson();
 for (var i = 0; i < 10; i++) {
     console.log(i)
 }
+/**
+ * 0~9
+ */
 
 for (var i = 0; i < 10; i++) {
     setTimeout(function () {
         console.log(i)
     }, 0)
 }
+/**
+ *10个10，for循环是主任务，setTimeOut是异步任务，主任务执行完才执行异步任务
+ */
 
 for (var i = 0; i < 10; i++) {
     (function (i) {
@@ -78,7 +84,12 @@ for (var i = 0; i < 10; i++) {
         }, 0)
     })(i);
 }
-
+/**
+ * 0~9
+ */
 for (let i = 0; i < 10; i++) {
     console.log(i);
 }
+/**
+ * 0~9
+ */
