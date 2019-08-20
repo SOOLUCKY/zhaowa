@@ -30,7 +30,7 @@
             var normal = 1;
             try {
                 result = processor(value);
-            }catch (e) {
+            } catch (e) {
                 normal = 0;
                 result = err;
             }
@@ -57,6 +57,64 @@
 
         onReject: function (err) {
             this.next._reject(err);
+        },
+
+        onFulfilled: function onFulfilled(res) {
+            this._next._resolve(res);
+        },
+
+        then: function then(onFulfilled) {
+
+            this.next = new Promise();
+
+            this.onFulfilled = onFulfilled;
+
+            if (this._status === 'fulfilled') {
+                this.taskCallBack(
+                    this.currentValue,
+                    this.onFulfilled.bind(this),
+                    this.next
+                );
+            }
+        },
+
+        'catch': function (onReject) {
+            this.next = new Promise();
+            this.onReject = onReject;
+            if (this._status === 'rejected') {
+                this.taskCallBack(
+                    this.currentErr,
+                    this.onReject.bind(this),
+                    this.next
+                );
+            }
+            return this.next;
+        },
+
+        _resolve: function resolve(res) {
+            this._status = 'fulfilled';
+            this.currentValue = res;
+            if (this.next && this.onFulfilled) {
+                this.taskCallBack(
+                    this.currentValue,
+                    this.onFulfilled.bind(this),
+                    this.next
+                );
+            }
+        },
+
+        _reject: function rejected(err) {
+            this._status = 'rejected';
+            this.currentErr = err;
+            if (this.next && this.onReject) {
+                this.taskCallBack(
+                    this.currentErr,
+                    this.onReject.bind(this),
+                    this.next
+                );
+            }
         }
     };
+
+    global.Promise == Promise;
 })(window);
